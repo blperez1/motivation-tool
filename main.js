@@ -3,6 +3,10 @@ const taskList = [];
 const tasks = document.querySelector("#tasks");
 const inputValue = document.querySelector("#input-value");
 const saveBtn = document.querySelector("#save-btn");
+const randomBtn = document.querySelector("#random-btn");
+const numberHeading = document.querySelector("#random-number");
+const oneTask = document.querySelector('#one-task');
+const manyTasks = document.querySelector('#many-tasks');
 
 function addToList(task) {
     const taskItem = {
@@ -15,9 +19,7 @@ function addToList(task) {
 
 function renderTask({id, task}) {
     return `
-        <div>
-            <p class="task-div"><span>${id}</span> ${task}</p>
-        </div>
+        <li class="task-item" data-dbid=${id}>${task}</li>
     `
 }
 
@@ -30,12 +32,32 @@ function renderTasks() {
     tasks.innerHTML = html;
 }
 
-saveBtn.addEventListener('click', () => {
+saveBtn.addEventListener('click', (e) => {
+    e.preventDefault();
     addToList(inputValue.value);
-    console.log(taskList);
     renderTasks();
     inputValue.value = "";
 })
 
+let random = Math.floor(Math.random() * taskList.length) + 1;
+let taskItem = document.getElementsByTagName("li");
 
+oneTask.addEventListener('click', (e) => {
+    e.preventDefault();
+    numberHeading.innerText = random;
+
+    for(let item of taskItem) {
+        item.style.color = "white";
+        let dbid = item.getAttribute("data-dbid");
+        if(dbid == random) {
+            item.style.color = "purple";
+        }
+    }
+
+})
+
+manyTasks.addEventListener('click', (e) => {
+    e.preventDefault();
+    
+})
 
